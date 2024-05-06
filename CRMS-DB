@@ -1,0 +1,570 @@
+ CREATE TABLE Customers (
+     CustomerID INT PRIMARY KEY,
+     FirstName VARCHAR(20),
+     LastName VARCHAR(20),
+     Phone VARCHAR(20),
+     Address VARCHAR(20),
+     City VARCHAR(10),
+     State VARCHAR(10),
+     Country VARCHAR(10),
+     PostalCode VARCHAR(20),
+     Gender VARCHAR(10)
+);
+
+CREATE TABLE Contacts (
+    ContactID INT PRIMARY KEY,
+    CustomerID INT,
+    ContactName VARCHAR2(20),
+    ContactEmail VARCHAR2(20),
+    ContactPhone VARCHAR2(20),
+    Department VARCHAR2(10),
+    Notes VARCHAR2(20), 
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+
+
+CREATE TABLE Interactions (
+    InteractionID INT PRIMARY KEY,
+    CustomerID INT,
+    ContactID INT,
+    InteractionDate DATE,
+    InteractionType VARCHAR(20),
+    InteractionDetails VARCHAR2(20),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID),
+    FOREIGN KEY (ContactID) REFERENCES Contacts(ContactID)
+);
+CREATE TABLE Products (
+    ProductID INT PRIMARY KEY,
+    ProductName VARCHAR(50),
+    Description VARCHAR2(50),
+    Price DECIMAL(10, 2),
+    QuantityAvailable INT
+);
+
+CREATE TABLE Orders (
+    OrderID INT PRIMARY KEY,
+    CustomerID INT,
+    OrderDate DATE,
+    TotalAmount DECIMAL(10, 2),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+
+CREATE TABLE OrderDetails (
+    OrderDetailID INT PRIMARY KEY,
+    OrderID INT,
+    ProductID INT,
+    Quantity INT,
+    UnitPrice DECIMAL(10, 2),
+    TotalPrice DECIMAL(10, 2),
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+--adding column in any table
+
+ALTER TABLE Customers 
+ADD Gender VARCHAR2(10); 
+
+--modify column definition in the table
+
+ALTER TABLE Customers
+MODIFY Email VARCHAR2(255); 
+
+--alter column name 
+
+ALTER TABLE Customers
+RENAME COLUMN Email TO NewEmail;
+
+--drop the column from the table
+
+ALTER TABLE Customers
+DROP COLUMN NewEmail; 
+
+--insert into customer table //insertion one by one//have to insert gender
+
+INSERT INTO Customers (CustomerID, FirstName, LastName, Phone, Address, City, State, Country, PostalCode, Gender)
+VALUES
+    (1, 'John', 'Doe', '123456789', '123 Main St', 'Anytown', 'CA', 'USA', '12345', 'Male');
+
+INSERT INTO Customers (CustomerID, FirstName, LastName, Phone, Address, City, State, Country, PostalCode, Gender)
+VALUES
+    (2, 'Jane', 'Smith', '987654321', '456 Oak Ave', 'Othertown', 'NY', 'USA', '54321', 'Male');
+
+INSERT INTO Customers (CustomerID, FirstName, LastName, Phone, Address, City, State, Country, PostalCode, Gender)
+VALUES
+    (3, 'Alice', 'Johnson', '555555555', '789 Elm Rd', 'Somewhere', 'TX', 'USA', '67890', 'Female');
+
+INSERT INTO Customers (CustomerID, FirstName, LastName, Phone, Address, City, State, Country, PostalCode, Gender)
+VALUES
+    (4, 'Bob', 'Brown', '999888777', '321 Pine Blvd', 'Nowhere', 'FL', 'USA', '13579', 'Male');
+   
+INSERT INTO Customers (CustomerID, FirstName, LastName, Phone, Address, City, State, Country, PostalCode, Gender)
+VALUES 
+    (5, 'Emily', 'Davis', '444333222', '654 Cedar Ln', 'Noway', 'WA', 'USA', '97531', 'Female');
+
+INSERT INTO Customers (CustomerID, FirstName, LastName, Phone, Address, City, State, Country, PostalCode, Gender)
+VALUES 
+    (6, 'Michael', 'Wilson', '222111000', '987 Birch St', 'Anywhere', 'IL', 'USA', '24680', 'Male');
+
+//set linesize, pagesize. then (select * from customers1;)
+
+//-- Inserting values into the Contacts table--//
+INSERT INTO Contacts (ContactID, CustomerID, ContactName, ContactEmail, ContactPhone, Department, Notes)
+VALUES (1, 1, 'John Doe', 'john.doe@example.com', '123456789', 'Sales', 'No notes');
+
+
+INSERT INTO Contacts (ContactID, CustomerID, ContactName, ContactEmail, ContactPhone, Department, Notes)
+VALUES (2, 2, 'Jane Smith', 'jane.sm@example.com', '987654321', 'Support', 'Initial contact');
+
+
+INSERT INTO Contacts (ContactID, CustomerID, ContactName, ContactEmail, ContactPhone, Department, Notes)
+VALUES (3, 3, 'Alice Johnson', 'alice@example.com', '555555555', 'Marketing', 'Follow up');
+
+INSERT INTO Contacts (ContactID, CustomerID, ContactName, ContactEmail, ContactPhone, Department, Notes)
+VALUES (4, 4, 'Bob Brown', 'bob@example.com', '999888777', 'Sales', 'Follow up needed');
+
+
+
+INSERT INTO Contacts (ContactID, CustomerID, ContactName, ContactEmail, ContactPhone, Department, Notes)
+VALUES (5, 5, 'Emily Davis', 'emily@example.com', '444333222', 'Support', 'No issues reported');
+
+INSERT INTO Contacts (ContactID, CustomerID, ContactName, ContactEmail, ContactPhone, Department, Notes)
+VALUES (6, 6, 'Dora Ave', 'dora@example.com', '777333222', 'Support', 'No issues reported');
+
+
+
+INSERT INTO Interactions (InteractionID, CustomerID, ContactID, InteractionDate, InteractionType, InteractionDetails)
+VALUES (1, 1, 1, TO_DATE('2024-04-24', 'YYYY-MM-DD'), 'Call', 'Positive feedback');
+
+
+INSERT INTO Interactions (InteractionID, CustomerID, ContactID, InteractionDate, InteractionType, InteractionDetails)
+VALUES (2, 2, 2, TO_DATE('2024-04-25', 'YYYY-MM-DD'), 'Email', 'Follow-up query');
+
+
+INSERT INTO Interactions (InteractionID, CustomerID, ContactID, InteractionDate, InteractionType, InteractionDetails)
+VALUES (3, 3, 3, TO_DATE('2024-04-26', 'YYYY-MM-DD'), 'Meeting', 'Discuss for Project');
+
+
+INSERT INTO Interactions (InteractionID, CustomerID, ContactID, InteractionDate, InteractionType, InteractionDetails)
+VALUES (4, 4, 4, TO_DATE('2024-04-27', 'YYYY-MM-DD'), 'Call', 'Service inquiry');
+
+
+INSERT INTO Interactions (InteractionID, CustomerID, ContactID, InteractionDate, InteractionType, InteractionDetails)
+VALUES (5, 5, 5, TO_DATE('2024-04-28', 'YYYY-MM-DD'), 'Email', 'Feedback received');
+
+
+INSERT INTO Interactions (InteractionID, CustomerID, ContactID, InteractionDate, InteractionType, InteractionDetails)
+VALUES (6, 6, 6, TO_DATE('2024-04-29', 'YYYY-MM-DD'), 'Meeting', 'Project discussion');
+
+
+//-- Inserting values into the Products table--//
+INSERT INTO Products (ProductID, ProductName, Description, Price, QuantityAvailable)
+VALUES (1, 'Laptop', 'Slim laptop', 1200.00, 10);
+
+
+INSERT INTO Products (ProductID, ProductName, Description, Price, QuantityAvailable)
+VALUES (2, 'Smartphone', 'High-performance smartphone', 800.00, 20);
+
+
+INSERT INTO Products (ProductID, ProductName, Description, Price, QuantityAvailable)
+VALUES (3, 'Tablet', '10-inch tablet', 400.00, 15);
+
+
+INSERT INTO Products (ProductID, ProductName, Description, Price, QuantityAvailable)
+VALUES (4, 'Smartwatch', 'Fitness smartwatch', 150.00, 30);
+
+
+INSERT INTO Products (ProductID, ProductName, Description, Price, QuantityAvailable)
+VALUES (5, 'Headphones', 'Wireless headphones', 100.00, 25);
+
+
+INSERT INTO Products (ProductID, ProductName, Description, Price, QuantityAvailable)
+VALUES (6, 'Printer', 'Color printer', 300.00, 12);
+
+//--Inserting values into the Orders table--//
+
+INSERT INTO Orders (OrderID, CustomerID, OrderDate, TotalAmount)
+VALUES (1, 1, TO_DATE('2024-04-24', 'YYYY-MM-DD'), 1200.00);
+
+
+INSERT INTO Orders (OrderID, CustomerID, OrderDate, TotalAmount)
+VALUES (2, 2, TO_DATE('2024-04-25', 'YYYY-MM-DD'), 800.00);
+
+
+INSERT INTO Orders (OrderID, CustomerID, OrderDate, TotalAmount)
+VALUES (3, 3, TO_DATE('2024-04-26', 'YYYY-MM-DD'), 400.00);
+
+
+INSERT INTO Orders (OrderID, CustomerID, OrderDate, TotalAmount)
+VALUES (4, 4, TO_DATE('2024-04-27', 'YYYY-MM-DD'), 150.00);
+
+
+INSERT INTO Orders (OrderID, CustomerID, OrderDate, TotalAmount)
+VALUES (5, 5, TO_DATE('2024-04-28', 'YYYY-MM-DD'), 100.00);
+
+INSERT INTO Orders (OrderID, CustomerID, OrderDate, TotalAmount)
+VALUES (6, 6, TO_DATE('2024-04-29', 'YYYY-MM-DD'), 300.00);
+
+//--Inserting values into the OrderDetails table--//
+INSERT INTO OrderDetails (OrderDetailID, OrderID, ProductID, Quantity, UnitPrice, TotalPrice)
+VALUES (1, 1, 1, 2, 600.00, 1200.00);
+
+
+INSERT INTO OrderDetails (OrderDetailID, OrderID, ProductID, Quantity, UnitPrice, TotalPrice)
+VALUES (2, 2, 2, 1, 800.00, 800.00);
+
+
+INSERT INTO OrderDetails (OrderDetailID, OrderID, ProductID, Quantity, UnitPrice, TotalPrice)
+VALUES (3, 3, 3, 3, 120.00, 360.00);
+
+
+INSERT INTO OrderDetails (OrderDetailID, OrderID, ProductID, Quantity, UnitPrice, TotalPrice)
+VALUES (4, 4, 4, 2, 75.00, 150.00);
+
+INSERT INTO OrderDetails (OrderDetailID, OrderID, ProductID, Quantity, UnitPrice, TotalPrice)
+VALUES (5, 5, 5, 1, 100.00, 100.00);
+
+
+INSERT INTO OrderDetails (OrderDetailID, OrderID, ProductID, Quantity, UnitPrice, TotalPrice)
+VALUES (6, 6, 6, 1, 300.00, 300.00);
+
+-updating the data in table
+ 
+UPDATE Products
+SET QuantityAvailable = 25
+WHERE ProductID = 1;
+
+
+//--delete operation--//
+(-- First, delete the order details related to the orders associated with CustomerID = 5)
+DELETE FROM OrderDetails
+WHERE OrderID IN (SELECT OrderID FROM Orders1 WHERE CustomerID = 5);
+
+
+DELETE FROM Orders
+WHERE CustomerID = 5;
+(-- Once the related order details are deleted, you can delete the orders)
+
+
+--select method
+SELECT FirstName, LastName
+FROM Customers
+WHERE State = 'CA';
+
+--select distinct method
+SELECT DISTINCT State
+FROM Customers;
+
+--like method
+SELECT *
+FROM Customers
+WHERE LastName LIKE '%a%';
+
+-- Finding names of customers that have 'h' at the end and 'e' in the name
+SELECT FirstName, LastName
+FROM Customers
+WHERE LastName LIKE '%h' AND FirstName IN (SELECT FirstName FROM Customers1 WHERE FirstName LIKE '%e%');
+
+-- Finding distinct names of customers that have 'n' at the end and 'o' in the name
+SELECT DISTINCT FirstName, LastName
+  FROM Customers
+  WHERE LastName LIKE '%n' AND FirstName IN (SELECT FirstName FROM Customers1 WHERE FirstName LIKE '%o%');
+
+
+-- Finding names of customers that have 's' at the end and doesn't have 'j' in the name
+SELECT FirstName, LastName
+FROM Customers
+WHERE LastName LIKE '%s' AND FirstName NOT LIKE '%j%';
+
+-- Finding distinct names of customers that have 'n' at the end and doesn't have 'z' in the name
+SELECT DISTINCT FirstName, LastName
+FROM Customers
+WHERE LastName LIKE '%n' AND FirstName NOT LIKE '%z%';
+
+//--Finding customers whose order total is higher than at least one order with a total of at least $300:
+SELECT CustomerID
+FROM Orders
+WHERE TotalAmount > SOME (SELECT TotalAmount FROM Orders1 WHERE TotalAmount >= 300);
+
+--Finding customers whose order total is higher than all orders with a total of at least $1500:
+SELECT CustomerID
+FROM Orders
+WHERE TotalAmount > ALL (SELECT TotalAmount FROM Orders1 WHERE TotalAmount >= 1500);
+
+Finding customers whose order total is higher or equal to all orders with a total of at least $800:
+SELECT CustomerID
+FROM Orders
+WHERE TotalAmount >= ALL (SELECT TotalAmount FROM Orders1 WHERE TotalAmount >= 800);
+
+//--exsists or not exsists
+(Customers who have placed orders (EXISTS);)
+SELECT CustomerID, FirstName, LastName
+FROM Customers c
+WHERE EXISTS (
+    SELECT 1
+    FROM Orders o
+    WHERE o.CustomerID = c.CustomerID
+);
+
+(Customers who haven't placed orders (NOT EXISTS);)
+SELECT CustomerID, FirstName, LastName
+FROM Customers c
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM Orders o
+    WHERE o.CustomerID = c.CustomerID
+);
+
+
+//--(string operation)
+SELECT *
+FROM Customers
+WHERE LastName LIKE '%n';
+
+SELECT *
+FROM Customers
+WHERE LENGTH(FirstName) = 3;
+
+--order by(ascending by default)
+SELECT *
+FROM Orders
+ORDER BY OrderDate, TotalAmount;
+
+--order by descending order
+SELECT *
+FROM Orders
+ORDER BY OrderDate DESC, TotalAmount DESC;
+
+(--aggregate function)
+--total row in a table
+
+SELECT COUNT(*) AS TotalCustomers
+FROM Customers;
+
+--total amount of order money
+SELECT SUM(TotalAmount) AS TotalOrderAmount
+FROM Orders;
+
+
+--avg amount of order money
+SELECT AVG(TotalAmount) AS AverageTotalAmount
+FROM Orders;
+
+--max amount
+SELECT MAX(TotalAmount) AS MaxTotalAmount
+FROM Orders;
+
+--min amount
+SELECT MIN(TotalAmount) AS MinTotalAmount
+FROM Orders;
+
+//group by and have by function
+--group by
+SELECT CustomerID, COUNT(*) AS OrderCount
+FROM Orders
+GROUP BY CustomerID;
+
+--have by
+SELECT CustomerID, SUM(TotalAmount) AS TotalSpent
+FROM Orders
+GROUP BY CustomerID
+HAVING SUM(TotalAmount) > 1000;
+
+--query
+SELECT OrderID, CustomerID
+FROM Orders
+WHERE TotalAmount > 200;
+--subquery
+SELECT OrderID, CustomerID
+FROM Orders
+WHERE TotalAmount > (
+    SELECT AVG(TotalAmount)
+    FROM Orders
+);
+
+
+//--union operator
+--union select
+-- Describe Orders table
+SELECT OrderID FROM Orders UNION SELECT OrderID FROM OrderDetails;
+
+--union all
+SELECT OrderID FROM Orders UNION ALL SELECT OrderID FROM OrderDetails;
+
+--intersect operation
+SELECT CustomerID FROM Customers intersect SELECT CustomerID FROM Orders;
+
+--minus operation
+SELECT CustomerID FROM Customers minus SELECT CustomerID FROM Orders;
+
+
+//--with clause
+--finding info of max amount using with clause
+WITH MaxOrderAmount AS (
+    SELECT MAX(TotalAmount) AS MaximumTotalAmount
+    FROM Orders
+)
+SELECT o.*
+FROM Orders o, MaxOrderAmount
+WHERE o.TotalAmount = MaxOrderAmount.MaximumTotalAmount;
+
+--join operation
+SELECT *
+FROM Orders1 o
+JOIN Customers c ON o.CustomerID = c.CustomerID;
+--using 
+SELECT *
+FROM Orders
+JOIN Customers USING (CustomerID);
+
+--left outer join
+SELECT *
+FROM Customers c
+LEFT JOIN Orders o ON c.CustomerID = o.CustomerID;
+
+--right outer join
+SELECT *
+FROM Orders o
+RIGHT OUTER JOIN Interactions i ON o.CustomerID = i.CustomerID;
+
+--full outer join
+
+ SELECT *
+ FROM Products p
+ FULL OUTER JOIN OrderDetails od ON p.ProductID = od.ProductID;
+
+
+--view 
+CREATE VIEW OrderTotalAmountView AS
+SELECT OrderID, TotalAmount
+FROM Orders;
+
+--show view
+SELECT * FROM OrderTotalAmountView;
+
+--pl/sql command
+--minimum order amount
+SET SERVEROUTPUT ON;
+
+DECLARE
+   min_order_amount DECIMAL(10, 2);
+BEGIN
+   SELECT MIN(TotalAmount) INTO min_order_amount
+   FROM Orders;
+   
+   DBMS_OUTPUT.PUT_LINE('The minimum order amount is: ' || min_order_amount);
+END;
+/
+
+
+--pl/sql loop 
+--exihibition of first three customers FirstName and City
+
+SET SERVEROUTPUT ON;
+
+DECLARE
+   CURSOR cust_cur IS 
+      SELECT FirstName, City
+      FROM Customers;
+   
+   cust_rec cust_cur%ROWTYPE;
+   counter NUMBER := 0;
+BEGIN
+   OPEN cust_cur;
+   
+   LOOP
+      FETCH cust_cur INTO cust_rec;
+      EXIT WHEN cust_cur%NOTFOUND OR counter >= 3;
+      
+      counter := counter + 1;
+      
+      DBMS_OUTPUT.PUT_LINE('First Name: ' || cust_rec.FirstName || ', City: ' || cust_rec.City);
+   END LOOP;
+   
+   CLOSE cust_cur;
+END;
+/
+
+
+--procedure
+--unit price of maximum quantity product 
+SET SERVEROUTPUT ON;
+
+CREATE OR REPLACE PROCEDURE get_unit_amount IS
+    unit_amt OrderDetails.UnitPrice%TYPE;
+BEGIN
+    SELECT UnitPrice INTO unit_amt
+    FROM OrderDetails
+    WHERE Quantity = (SELECT MAX(Quantity) FROM OrderDetails1);
+
+    DBMS_OUTPUT.PUT_LINE('Unit Amount is: ' || unit_amt);
+END;
+/
+
+BEGIN
+    get_unit_amount;
+END;
+/
+
+--pl/sql function
+SET SERVEROUTPUT ON;
+
+CREATE OR REPLACE FUNCTION avg_interaction_count RETURN NUMBER IS
+   total_count INTEGER;
+   total_customers INTEGER;
+   avg_count NUMBER;
+BEGIN
+  SELECT COUNT(*) INTO total_count FROM Interactions1;
+  SELECT COUNT(DISTINCT CustomerID) INTO total_customers FROM Interactions1;
+
+  avg_count := total_count / total_customers;
+
+  RETURN avg_count;
+END;
+/
+
+DECLARE
+  avg_count NUMBER;
+BEGIN
+  avg_count := avg_interaction_count;
+  DBMS_OUTPUT.PUT_LINE('Average interaction count: ' || avg_count);
+END;
+/
+
+--trigger
+--deleting corresponding rows from Orders and Products tables
+SET SERVEROUTPUT ON;
+
+CREATE OR REPLACE TRIGGER delete_order_details
+BEFORE DELETE ON OrderDetails
+REFERENCING OLD AS o
+FOR EACH ROW
+BEGIN
+    DELETE FROM Orders WHERE OrderID = :o.OrderID;
+    DELETE FROM Products WHERE ProductID = :o.ProductID;
+END;
+/
+
+
+DELETE FROM OrderDetails
+WHERE OrderDetailID = 2;
+
+
+SELECT * FROM Orders;
+SELECT * FROM Products;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
